@@ -22,4 +22,5 @@ class DepartmentFactory extends Factory
             'updated_at' => Carbon::now(),
         ];
     }
+
 }
