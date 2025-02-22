@@ -1,5 +1,11 @@
 # Documentación de la API: Departamentos
 
+## URL Base
+La base URL de la API es:
+```
+https://helios-backend.duckdns.org/api
+```
+
 ## Instrucciones para levantar el proyecto
 
 1. Clonar el repositorio:
@@ -36,7 +42,7 @@
 ### 1. Obtener todos los departamentos
 **Endpoint:**
 ```http
-GET /api/departments
+GET /departments
 ```
 **Descripción:**
 Obtiene una lista de todos los departamentos.
@@ -48,7 +54,7 @@ Obtiene una lista de todos los departamentos.
 
 **Ejemplo de solicitud:**
 ```http
-GET /api/departments?search=Tecnologia&level=2
+GET /departments?search=Tecnologia&level=2
 ```
 
 **Respuesta exitosa (200 OK):**
@@ -75,7 +81,7 @@ GET /api/departments?search=Tecnologia&level=2
 ### 2. Obtener un departamento por ID
 **Endpoint:**
 ```http
-GET /api/departments/{id}
+GET /departments/{id}
 ```
 **Descripción:**
 Obtiene los detalles de un departamento específico.
@@ -112,7 +118,7 @@ Obtiene los detalles de un departamento específico.
 ### 3. Crear un nuevo departamento
 **Endpoint:**
 ```http
-POST /api/departments
+POST /departments
 ```
 **Descripción:**
 Crea un nuevo departamento.
@@ -158,7 +164,7 @@ Crea un nuevo departamento.
 ### 4. Actualizar un departamento
 **Endpoint:**
 ```http
-PUT /api/departments/{id}
+PUT /departments/{id}
 ```
 **Descripción:**
 Actualiza la información de un departamento existente.
@@ -203,7 +209,7 @@ Actualiza la información de un departamento existente.
 ### 5. Eliminar un departamento
 **Endpoint:**
 ```http
-DELETE /api/departments/{id}
+DELETE /departments/{id}
 ```
 **Descripción:**
 Elimina un departamento existente.
@@ -226,7 +232,7 @@ Sin contenido.
 ### 6. Obtener subdepartamentos de un departamento
 **Endpoint:**
 ```http
-GET /api/departments/{id}/subdepartments
+GET /departments/{id}/subdepartments
 ```
 **Descripción:**
 Obtiene la lista de subdepartamentos asociados a un departamento.
