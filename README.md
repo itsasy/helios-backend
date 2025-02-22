@@ -1,66 +1,267 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Documentación de la API: Departamentos
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Instrucciones para levantar el proyecto
 
-## About Laravel
+1. Clonar el repositorio:
+   ```sh
+   git clone https://github.com/itsasy/helios-backend.git
+   cd helios-backend
+   ```
+2. Instalar dependencias:
+   ```sh
+   composer install
+   ```
+3. Configurar el archivo de entorno:
+   ```sh
+   cp .env.example .env
+   ```
+4. Generar la clave de la aplicación:
+   ```sh
+   php artisan key:generate
+   ```
+5. Configurar la base de datos en el archivo `.env`.
+6. Ejecutar las migraciones y seeders:
+   ```sh
+   php artisan migrate --seed
+   ```
+7. Iniciar el servidor:
+   ```sh
+   php artisan serve
+   ```
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Endpoints
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### 1. Obtener todos los departamentos
+**Endpoint:**
+```http
+GET /api/departments
+```
+**Descripción:**
+Obtiene una lista de todos los departamentos.
 
-## Learning Laravel
+**Parámetros opcionales:**
+- `search` (string): Filtra departamentos por nombre.
+- `parent_id` (int): Filtra por el ID del departamento padre.
+- `level` (int): Filtra por nivel del departamento.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+**Ejemplo de solicitud:**
+```http
+GET /api/departments?search=Tecnologia&level=2
+```
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+**Respuesta exitosa (200 OK):**
+```json
+{
+  "data": [
+    {
+      "id": 1,
+      "name": "Marco Hoeger",
+      "level": 2,
+      "employees_count": 72,
+      "total_employees": 100,
+      "ambassador_name": "Janessa Rau",
+      "parent_id": null,
+      "parent_name": null,
+      "subDepartments_count": 3
+    }
+  ]
+}
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+---
 
-## Laravel Sponsors
+### 2. Obtener un departamento por ID
+**Endpoint:**
+```http
+GET /api/departments/{id}
+```
+**Descripción:**
+Obtiene los detalles de un departamento específico.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+**Parámetros:**
+- `id` (int, requerido) - ID del departamento a consultar.
 
-### Premium Partners
+**Respuesta exitosa (200 OK):**
+```json
+{
+  "data": {
+    "id": 1,
+    "name": "Marco Hoeger",
+    "level": 2,
+    "employees_count": 72,
+    "total_employees": 100,
+    "ambassador_name": "Janessa Rau",
+    "parent_id": null,
+    "parent_name": null,
+    "subDepartments_count": 3
+  }
+}
+```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+**Respuesta de error (404 Not Found):**
+```json
+{
+  "message": "Departamento no encontrado"
+}
+```
 
-## Contributing
+---
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### 3. Crear un nuevo departamento
+**Endpoint:**
+```http
+POST /api/departments
+```
+**Descripción:**
+Crea un nuevo departamento.
 
-## Code of Conduct
+**Cuerpo de la solicitud (JSON):**
+```json
+{
+  "name": "Departamento de Tecnología",
+  "ambassador_name": "John Doe",
+  "parent_id": null
+}
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+**Respuesta exitosa (201 Created):**
+```json
+{
+  "data": {
+    "id": 2,
+    "name": "Departamento de Tecnología",
+    "level": 1,
+    "employees_count": 50,
+    "total_employees": 50,
+    "ambassador_name": "John Doe",
+    "parent_id": null,
+    "parent_name": null,
+    "subDepartments_count": 0
+  }
+}
+```
 
-## Security Vulnerabilities
+**Respuesta de error (422 Unprocessable Entity):**
+```json
+{
+  "message": "Error de validación",
+  "errors": {
+    "name": ["El nombre es obligatorio"]
+  }
+}
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+---
 
-## License
+### 4. Actualizar un departamento
+**Endpoint:**
+```http
+PUT /api/departments/{id}
+```
+**Descripción:**
+Actualiza la información de un departamento existente.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+**Parámetros:**
+- `id` (int, requerido) - ID del departamento a actualizar.
+
+**Cuerpo de la solicitud (JSON):**
+```json
+{
+  "name": "Departamento de Innovación",
+  "ambassador_name": "Jane Smith"
+}
+```
+
+**Respuesta exitosa (200 OK):**
+```json
+{
+  "data": {
+    "id": 2,
+    "name": "Departamento de Innovación",
+    "level": 2,
+    "employees_count": 60,
+    "total_employees": 80,
+    "ambassador_name": "Jane Smith",
+    "parent_id": null,
+    "parent_name": null,
+    "subDepartments_count": 0
+  }
+}
+```
+
+**Respuesta de error (404 Not Found):**
+```json
+{
+  "message": "Departamento no encontrado"
+}
+```
+
+---
+
+### 5. Eliminar un departamento
+**Endpoint:**
+```http
+DELETE /api/departments/{id}
+```
+**Descripción:**
+Elimina un departamento existente.
+
+**Parámetros:**
+- `id` (int, requerido) - ID del departamento a eliminar.
+
+**Respuesta exitosa (204 No Content):**
+Sin contenido.
+
+**Respuesta de error (404 Not Found):**
+```json
+{
+  "message": "Departamento no encontrado"
+}
+```
+
+---
+
+### 6. Obtener subdepartamentos de un departamento
+**Endpoint:**
+```http
+GET /api/departments/{id}/subdepartments
+```
+**Descripción:**
+Obtiene la lista de subdepartamentos asociados a un departamento.
+
+**Parámetros:**
+- `id` (int, requerido) - ID del departamento padre.
+
+**Respuesta exitosa (200 OK):**
+```json
+{
+  "data": [
+    {
+      "id": 11,
+      "name": "Vivian Daniel III",
+      "parent_id": 1,
+      "level": 5,
+      "employees_count": 41,
+      "total_employees": 60,
+      "ambassador_name": "Zora Macejkovic",
+      "created_at": "2025-02-21T08:13:03.000000Z",
+      "updated_at": "2025-02-21T08:13:03.000000Z"
+    }
+  ]
+}
+```
+
+**Respuesta de error (404 Not Found):**
+```json
+{
+  "message": "Departamento no encontrado"
+}
+```
+
+---
+
+## Notas
+- Los datos devueltos en las respuestas están dentro de la clave `data`.
+
