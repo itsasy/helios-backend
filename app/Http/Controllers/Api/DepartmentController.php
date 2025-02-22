@@ -29,6 +29,9 @@ class DepartmentController extends Controller
             'ambassador_name' => 'nullable|string|max:100',
         ]);
 
+        $validatedData['level'] = rand(1, 10);
+        $validatedData['employees_count'] = rand(1, 100);
+
         return response()->json($this->service->createDepartment($validatedData), 201);
     }
 
@@ -39,13 +42,13 @@ class DepartmentController extends Controller
 
     public function update(Request $request, $department)
     {
-        $validated = $request->validate([
+        $validatedData = $request->validate([
             'name' => 'sometimes|required|string|max:45|unique:departments,name,' . $department,
             'parent_id' => 'nullable|exists:departments,id',
             'ambassador_name' => 'nullable|string|max:100',
         ]);
 
-        return response()->json($this->service->updateDepartment($department, $validated));
+        return response()->json($this->service->updateDepartment($department, $validatedData));
     }
 
     public function destroy($department)

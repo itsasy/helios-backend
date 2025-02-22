@@ -19,8 +19,10 @@ class DepartmentResource extends JsonResource
             'ambassador_name' => $this->ambassador_name,
 
             'parent_id' => $this->parent_id,
+            'parent_name' => $this->parent?->name,
 
             'subDepartments' => DepartmentResource::collection($this->whenLoaded('subDepartments')),
+            'subDepartments_count' => $this->subdepartments()->count()
         ];
     }
 }
