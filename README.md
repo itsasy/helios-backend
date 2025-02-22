@@ -5,6 +5,8 @@ La base URL de la API es:
 ```
 https://helios-backend.duckdns.org/api
 ```
+## Colección de Postman
+El proyecto incluye un archivo json para usar en Postman
 
 ## Instrucciones para levantar el proyecto
 
